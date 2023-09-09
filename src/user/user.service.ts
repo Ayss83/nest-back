@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { User, UserDocument } from 'src/models/user.model';
+import { UserDocument } from 'src/models/user.model';
 import { UserDetails } from './user-details.interface';
 
 @Injectable()
@@ -13,8 +13,8 @@ export class UserService {
   /**
    * Uses received parameters to create a new user and saves it in database
    *
-   * @param username 
-   * @param email 
+   * @param username
+   * @param email
    * @param hashedPassword encrypted password
    * @returns newly saved user
    */
@@ -40,12 +40,13 @@ export class UserService {
   }
 
   async findUserById(id: string): Promise<UserDetails | null> {
-    const user = await this.userModel.findOne({ id }).exec();
+    const user = await this.userModel.findById(id).exec();
+
     if (!user) {
       return null;
-    } else {
-      return this.getUserDetails(user);
     }
+
+    return this.getUserDetails(user);
   }
 
   /**

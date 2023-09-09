@@ -58,6 +58,13 @@ export class AuthService {
     return this.userService.getUserDetails(newUser);
   }
 
+  /**
+   * Checks if received email and password are matching a user in database and returns it
+   *
+   * @param email 
+   * @param password 
+   * @returns User information without password
+   */
   async validateUser(
     email: string,
     password: string,
@@ -81,11 +88,17 @@ export class AuthService {
     return this.userService.getUserDetails(user);
   }
 
-  async login(existingUser: {
+  /**
+   * If received credentials are valid, returns the corresponding Json web token
+   *
+   * @param credentials login information
+   * @returns Json web token to be used for secured requests
+   */
+  async login(credentials: {
     email: string;
     password: string;
   }): Promise<{ token: string } | null> {
-    const { email, password } = existingUser;
+    const { email, password } = credentials;
     const user = await this.validateUser(email, password);
 
     if (!user) {
