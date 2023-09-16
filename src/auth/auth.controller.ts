@@ -1,8 +1,7 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { HttpCode } from '@nestjs/common/decorators';
 import { HttpStatus } from '@nestjs/common/enums';
-import { User } from 'src/models/user.model';
-import { UserDetails } from 'src/user/user-details.interface';
+import { User, UserDetails } from 'src/models/user.model';
 import { AuthService } from './auth.service';
 
 @Controller('auth')
