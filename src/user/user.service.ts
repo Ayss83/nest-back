@@ -31,15 +31,15 @@ export class UserService {
   }
 
   async findUserByUsername(username: string): Promise<UserDocument | null> {
-    return this.userModel.findOne({ username }).exec();
+    return this.userModel.findOne({ username }).lean().exec();
   }
 
   async findUserByEmail(email: string): Promise<UserDocument | null> {
-    return this.userModel.findOne({ email }).exec();
+    return this.userModel.findOne({ email }).lean().exec();
   }
 
   async findUserById(id: string): Promise<UserDetails | null> {
-    const user = await this.userModel.findById(id).exec();
+    const user = await this.userModel.findById(id).lean().exec();
 
     if (!user) {
       return null;
