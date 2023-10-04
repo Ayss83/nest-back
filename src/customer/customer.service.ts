@@ -15,11 +15,14 @@ export class CustomerService {
   }
 
   async saveCustomer(customer: Partial<CustomerDocument>, ownerId: string) {
-    return this.customerModel.findOneAndUpdate(
-      { _id: customer._id ?? new mongoose.Types.ObjectId() },
-      { ...customer, ownerId },
-      { upsert: true },
-    );
+    if (!customer.num) {
+      return this.customerModel.create({ ...customer, ownerId });
+    } else {
+      return this.customerModel.findOneAndUpdate(
+        { num: customer.num },
+        { ...customer, ownerId }
+      );
+    }
   }
 
   async deleteCustomer(customerId: string, ownerId: string) {

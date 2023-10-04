@@ -6,7 +6,7 @@ export type CustomerDocument = Customer & Document;
 
 @Schema()
 export class Customer {
-  @Prop({ required: true })
+  @Prop()
   num: number;
 
   @Prop({ required: true })
@@ -15,13 +15,13 @@ export class Customer {
   @Prop({ required: true })
   firstName: string;
 
-  @Prop({ unique: true })
+  @Prop()
   email: string;
 
   @Prop({ type: Address })
   address: Address;
 
-  @Prop({ unique: true })
+  @Prop()
   phone: string;
 
   @Prop({ required: true })

@@ -27,6 +27,7 @@
     "@nestjs/mongoose": "^10.0.1",
     "@nestjs/passport": "^10.0.1",
     "@nestjs/platform-express": "^10.0.0",
+    "@typegoose/auto-increment": "^3.5.0",
     "bcrypt": "^5.1.1",
     "mongoose": "^7.5.0",
     "passport": "^0.6.0",

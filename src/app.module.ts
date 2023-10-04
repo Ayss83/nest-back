@@ -11,7 +11,7 @@ import { CustomerModule } from './customer/customer.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/invoicer'),
+    MongooseModule.forRoot('mongodb://127.0.0.1:27017/invoicer'),
     AuthModule,
     UserModule,
     InvoiceModule,
