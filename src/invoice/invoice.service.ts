@@ -14,15 +14,26 @@ export class InvoiceService {
     private readonly productService: ProductService,
   ) {}
 
-  async findAllUserInvoices(userId: string) {
+  findAllUserInvoices(userId: string) {
     return this.invoiceModel.find({ ownerId: userId }).exec();
   }
 
   async saveInvoice(invoice: Partial<InvoiceDocument>, ownerId: string) {
-    this.customerService.saveCustomer(invoice.customer, ownerId);
-    invoice.products.forEach((quantityProduct) => {
-      this.productService.saveProduct(quantityProduct.product, ownerId);
-    });
+    const customer = await this.customerService.saveCustomer(
+      invoice.customer,
+      ownerId,
+    );
+    // replace invoice customer by saveCustomer result to be up to date
+    invoice.customer = customer;
+    for (const quantityProduct of invoice.products) {
+      const product = await this.productService.saveProduct(
+        quantityProduct.product,
+        ownerId,
+      );
+      // replace product with saveProduct result to be up to date
+      quantityProduct.product = product;
+    }
+
     if (!invoice.num) {
       return this.invoiceModel.create({ ...invoice, ownerId });
     } else {

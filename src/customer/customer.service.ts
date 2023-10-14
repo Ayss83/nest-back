@@ -10,7 +10,7 @@ export class CustomerService {
     private readonly customerModel: Model<CustomerDocument>,
   ) {}
 
-  async findAllUserCustomers(userId: string) {
+  findAllUserCustomers(userId: string) {
     return this.customerModel.find({ ownerId: userId }).lean().exec();
   }
 
@@ -18,10 +18,12 @@ export class CustomerService {
     if (!customer.num) {
       return this.customerModel.create({ ...customer, ownerId });
     } else {
-      return this.customerModel.findOneAndUpdate(
+      await this.customerModel.findOneAndUpdate(
         { num: customer.num },
         { ...customer, ownerId }
       );
+
+      return this.customerModel.findOne({num: customer.num});
     }
   }
 

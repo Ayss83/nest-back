@@ -1,8 +1,9 @@
-import { Controller, Post, Body } from '@nestjs/common';
-import { HttpCode } from '@nestjs/common/decorators';
+import { Controller, Post, Body, Request } from '@nestjs/common';
+import { Get, HttpCode, UseGuards } from '@nestjs/common/decorators';
 import { HttpStatus } from '@nestjs/common/enums';
 import { User, UserDetails } from 'src/models/user.model';
 import { AuthService } from './auth.service';
+import { JwtGuard } from './guards/jwt.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -19,5 +20,11 @@ export class AuthController {
     @Body() user: { email: string; password: string },
   ): Promise<{ token: string } | null> {
     return this.authService.login(user);
+  }
+
+  @UseGuards(JwtGuard)
+  @Get('token')
+  renewToken(@Request() req) {
+    return this.authService.renewToken(req.user);
   }
 }

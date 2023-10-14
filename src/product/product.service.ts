@@ -10,16 +10,20 @@ export class ProductService {
     private readonly productModel: Model<ProductDocument>,
   ) {}
 
-  async findAllUserProducts(userId: string) {
+  findAllUserProducts(userId: string) {
     return this.productModel.find({ ownerId: userId }).lean().exec();
   }
 
   async saveProduct(product: Partial<ProductDocument>, ownerId: string) {
-    return this.productModel.findOneAndUpdate(
-      { _id: product._id ?? new mongoose.Types.ObjectId() },
-      { ...product, ownerId },
-      { upsert: true },
-    );
+    const id = product._id ?? new mongoose.Types.ObjectId();
+    await this.productModel
+      .findOneAndUpdate(
+        { _id: id },
+        { ...product, ownerId },
+        { upsert: true },
+      );
+
+    return this.productModel.findById(id);
   }
 
   async deleteProduct(productId: string, ownerId: string) {
@@ -28,7 +32,7 @@ export class ProductService {
       $and: [{ _id: new mongoose.Types.ObjectId(productId) }, { ownerId }],
     });
 
-    if(product) {
+    if (product) {
       return this.productModel.findByIdAndDelete(productId);
     }
   }

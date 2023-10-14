@@ -57,6 +57,10 @@ export class AuthService {
       return null;
     }
 
+    return this.renewToken(user);
+  }
+
+  async renewToken(user: UserDetails) {
     const jwt = await this.jwtService.signAsync({ user });
     return { token: jwt };
   }
@@ -99,7 +103,7 @@ export class AuthService {
    * @param password password in plain text
    * @returns encrypted password
    */
-  async hashPassword(password: string): Promise<string> {
+  hashPassword(password: string): Promise<string> {
     return bcrypt.hash(password, 12);
   }
 
@@ -110,7 +114,7 @@ export class AuthService {
    * @param hashedPassword hashed password
    * @returns Boolean indicating match
    */
-  async checkPasswordMatch(
+  checkPasswordMatch(
     password: string,
     hashedPassword: string,
   ): Promise<boolean> {
