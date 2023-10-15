@@ -8,6 +8,7 @@ import { InvoiceController } from './invoice/invoice.controller';
 import { InvoiceModule } from './invoice/invoice.module';
 import { ProductModule } from './product/product.module';
 import { CustomerModule } from './customer/customer.module';
+import { CompanyModule } from './company/company.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { CustomerModule } from './customer/customer.module';
     InvoiceModule,
     ProductModule,
     CustomerModule,
+    CompanyModule,
   ],
   controllers: [AppController, InvoiceController],
   providers: [AppService],
