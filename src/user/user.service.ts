@@ -22,12 +22,7 @@ export class UserService {
     email: string,
     hashedPassword: string,
   ): Promise<UserDocument> {
-    const newUser = new this.userModel({
-      username,
-      email,
-      password: hashedPassword,
-    });
-    return newUser.save();
+    return this.userModel.create({ username, email, password: hashedPassword });
   }
 
   async findUserByUsername(username: string): Promise<UserDocument | null> {

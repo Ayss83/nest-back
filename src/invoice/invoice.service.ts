@@ -15,7 +15,7 @@ export class InvoiceService {
   ) {}
 
   findAllUserInvoices(userId: string) {
-    return this.invoiceModel.find({ ownerId: userId }).exec();
+    return this.invoiceModel.find({ ownerId: userId }).lean().exec();
   }
 
   async saveInvoice(invoice: Partial<InvoiceDocument>, ownerId: string) {
