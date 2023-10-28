@@ -24,13 +24,38 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Back-end server for invoicer application.
 
 ## Installation
+
+This application uses a MongoDb community server database, it needs to be installed before running the application. The installation file can be found [here](https://www.mongodb.com/try/download/community).
+
+Once the application has been cloned, executing the following command line will install the necessary dependencies.
 
 ```bash
 $ npm install
 ```
+
+## Initiate demo database
+
+This step is optional as it is possible to run the application without any data initially present in database.
+
+To populate the database with some demo data, the MongoDB Command Line Database Tools are necessary. It can be downloaded [here](https://www.mongodb.com/try/download/database-tools) (select right platform and format).
+
+Run the installer.
+
+Locate the directory where the tools have been installed and the directory where the project has been cloned.
+
+Open a command prompt and execute the following command line
+
+```bash
+"PATH_TO_TOOLS_INSTALL\bin\mongorestore" -d invoicer "PATH_TO_PROJECT\database\dump\invoicer"
+```
+
+The database will be created and a demo account will be available.  
+  
+Login : demo@demo.com  
+Password : demoPassword
 
 ## Running the app
 
@@ -51,22 +76,13 @@ $ npm run start:prod
 # unit tests
 $ npm run test
 
-# e2e tests
-$ npm run test:e2e
-
 # test coverage
 $ npm run test:cov
 ```
 
 ## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
