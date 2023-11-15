@@ -14,6 +14,13 @@ export class CustomerService {
     return this.customerModel.find({ ownerId: userId }).lean().exec();
   }
 
+  /**
+   * Creates a new customer entry in database or updates if it's an existing one.
+   * 
+   * @param customer Customer data to save
+   * @param ownerId Requesting user's id
+   * @returns Saved customer
+   */
   async saveCustomer(customer: Partial<CustomerDocument>, ownerId: string) {
     if (!customer.num) {
       return this.customerModel.create({ ...customer, ownerId });
@@ -27,6 +34,13 @@ export class CustomerService {
     }
   }
 
+  /**
+   * Finds a customer based on its id in customers belonging to user and deletes it.
+   * 
+   * @param customerId Id of customer to delete
+   * @param ownerId Requesting user's id
+   * @returns Customer that's been deleted or null
+   */
   async deleteCustomer(customerId: string, ownerId: string) {
     const customer = await this.customerModel.findOne({
       $and: [{ _id: new mongoose.Types.ObjectId(customerId) }, { ownerId }],
